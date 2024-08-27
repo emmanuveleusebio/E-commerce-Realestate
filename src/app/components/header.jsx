@@ -1,9 +1,11 @@
 "use client";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { allPlots } from "../features/dataSlice";
+import { filterProduct } from "../features/dataSlice";
 import {
   chatCollections,
   wishlistdata,
@@ -12,14 +14,57 @@ import {
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 
+
 export default function Header() {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const products = useSelector((state) => state.globalValues.allProducts);
+  const [searchTerm, setSearchTerm] = useState("");
+   const dispatch = useDispatch();
+
+   useEffect(() => {
+    const fetchData = async () => {
+      try {
+       const data = await axios.get('api/Products')
+       dispatch(allPlots(data.data.plots))
+       dispatch(filterProduct(data.data.plots))
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
+  const handleInputChange = (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    setSearchTerm(searchTerm);
+  
+    // If the search input is empty, dispatch all products (reset to original data)
+    if (searchTerm === "") {
+       dispatch(filterProduct(products)); // Fetch and dispatch the full product list from the API
+    } else {
+      // Otherwise, filter the products based on the search term
+      const filteredProducts = products.filter(product =>
+        product.title.toLowerCase().includes(searchTerm) ||
+        product.location.toLowerCase().includes(searchTerm) ||
+        product.description.toLowerCase().includes(searchTerm)
+      );
+      dispatch(filterProduct(filteredProducts)); // Dispatch action to set filtered products
+    }
+  };
+  
+
+
+
 
   const profile = async () => {
     NProgress.start();
     try {
       router.push("/profile");
+    } 
+    catch{
+      console.log('error while navigating to profile')
     } finally {
       NProgress.done();
     }
@@ -67,6 +112,7 @@ export default function Header() {
         },
       });
       router.push("/messages");
+      console.log(result.data.name, '')
       dispatch(chatCollections(result.data.name));
     } catch (error) {
       console.log("error while getting involved chats", error);
@@ -79,7 +125,7 @@ export default function Header() {
     <div className="sticky z-10 w-full bg-[white]  top-0 border-b-2 py-3">
       <div className="flex p-3 justify-around w-full items-center  border-b-black">
         <div>
-          <h1 className="text-3xl font-bold">Brand Name</h1>
+          <h1 className="text-3xl font-bold">EDMODE</h1>
         </div>
         <div className="search bg-gray-200 rounded-xl p-1 ps-3">
           {" "}
@@ -88,6 +134,8 @@ export default function Header() {
             type="text"
             className="ps-1 bg-gray-200 "
             placeholder="Search"
+            value={searchTerm}
+            onChange={handleInputChange}
           />
         </div>
         <ul className="flex space-x-[60px] navbar font-bold">

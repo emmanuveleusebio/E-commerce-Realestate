@@ -1,12 +1,29 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function Upload() {
   const router = useRouter();
+  const [ data, setData ] = useState([])
+ 
+
+ useEffect(() => {
+   const fetchProducts = async() => {
+    try {
+      const result = await axios.get('/api/profile')
+      setData(result.data.message)
+      console.log(data)
+    } catch (error) {
+      console.log(error, 'error while getting uploaded products')
+    }
+   }
+   fetchProducts()
+  },[])
+
   const addPage = () => {
     router.push("/uploadPage");
-  };
+  }; 
   return (
     <div className="container m-auto font-sans pt-10 flex justify-center flex-col">
       <div className="m-auto">
@@ -20,50 +37,25 @@ export default function Upload() {
           </div>
         </div>
         <div className=" cardLists p-5 grid grid-cols-3 gap-[60px] m-auto  border-t-[1px] border-t-black">
-          <div className="max-w-[250px] overflow-hidden products">
-            <div className="h-[170px]">
-              <img
-                className="h-full"
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0JPCLyMnmt-P2m_PgFpOejiPyXzjU8P-85Q&s"
-                alt=""
-              />
-            </div>
-            <div className="p-4">
-              <p className=" text-2xl">3Bhk House</p>
-              <p className=""> 8 Guest , 3BedRoom </p>
-              <p className=" text-xl">3891 $</p>
-            </div>
-          </div>
+          {data.map((product, index) => (
+             <div key={index} className="max-w-[250px] overflow-hidden products">
+             <div className="h-[170px]">
+               <img
+                 className="h-full"
+                 src={product.imageUrl}
+                 alt=""
+               />
+             </div>
+             <div className="p-4">
+               <p className=" text-2xl">{product.title.length > 12 ? product.title.slice(0,12) : product.title}...</p>
+               <p className="">{product.location.length > 20 ? product.location.slice(0,20) : product.location}...</p>
+               <p className=" text-xl">{product.price}$</p>
+             </div>
+           </div>
+          ))}
+         
 
-          <div className="max-w-[250px] overflow-hidden products">
-            <div className="h-[170px]">
-              <img
-                className="h-full w-full"
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzT0GLdozA9O3qNafJIQWBZoRCWX-l1ECcvQ&s"
-                alt=""
-              />
-            </div>
-            <div className="p-4">
-              <p className=" text-2xl">3Bhk House</p>
-              <p className=""> 8 Guest , 3BedRoom </p>
-              <p className=" text-xl">3891 $</p>
-            </div>
-          </div>
 
-          <div className="max-w-[250px] overflow-hidden products">
-            <div className="h-[170px]">
-              <img
-                className="h-full w-full"
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeEVCezoKtvG1UXrf79CJMqLEbPWTrjQ6fBw&s"
-                alt=""
-              />
-            </div>
-            <div className="p-4">
-              <p className=" text-2xl">3Bhk House</p>
-              <p className=""> 8 Guest , 3BedRoom </p>
-              <p className=" text-xl">3891 $</p>
-            </div>
-          </div>
         </div>
       </div>
     </div>

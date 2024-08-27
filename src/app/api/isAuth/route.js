@@ -6,7 +6,6 @@ const secretKey = '123456';
 export async function GET(NextRequest) {
     try {
         const token = NextRequest.cookies.get('token');
-
         if (!token) {
             return NextResponse.json({ message: 'token not found' }, { status: 401 })
         }

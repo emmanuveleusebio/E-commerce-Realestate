@@ -10,24 +10,28 @@ export async function POST(NextRequest) {
     try {
         await Connect();
         const data = await NextRequest.json();
-        const { username, password, email } = data
+        const { password, email } = data
         const account = await user.findOne({ email })
+        
         if (!account) {
             return NextResponse.json({ status: 404, message: 'user not found' }, { status: 404 })
         }
 
         const match = await bcrypt.compare(password, account.password);
         if (match) {
-
             const token = jwt.sign({ id: account._id }, secretKey, { expiresIn: '1h' });
-            const response = NextResponse.json({ message: 'user verified sucessfully' })
+            const response = NextResponse.json({ message: 'user verified sucessfully',  role: account.role === 'admin' ? 'admin' : 'user'}, {status:200})
             response.cookies.set('token', token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                maxAge: 3600,
+                maxAge: 86400000,
                 path: '/'
             });
-            return response;
+           
+            if(account.role === 'admin'){
+                return response
+            }
+            return response
         } else {
             console.log('wrong password')
             return NextResponse.json({ status: 404, message: 'password is not correct' }, { status: 404 })

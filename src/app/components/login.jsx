@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../features/dataSlice";
 import NProgress from "nprogress";
+import "nprogress/nprogress.css";
+import { userList } from "../features/dataSlice";
 
 export default function Login() {
   const router = useRouter();
@@ -13,7 +15,6 @@ export default function Login() {
     (state) => state.globalValues.loginSuccess
   );
   const [logDetails, setLogDetails] = useState({
-    username: "",
     password: "",
     email: "",
   });
@@ -47,9 +48,15 @@ export default function Login() {
         try {
           const checkAuth = await axios.get("/api/isAuth");
           if (checkAuth.status === 200) {
-            dispatch(loginSuccess());
+            if (submitLog.data.role === "admin") {
+              router.push("/adminPanel");
+              const response = await axios.get("api/adminData");
+              dispatch(userList(response.data.data));
+            } else {
+              dispatch(loginSuccess());
 
-            router.push("/homePage");
+              router.push("/homePage");
+            }
           } else {
             setErrorMessage(checkAuth.data.message || "Authentication failed");
             setShowPopup(true);
@@ -82,18 +89,7 @@ export default function Login() {
           <h1 className="text-3xl font-bold text-white">Login</h1>
 
           <div className="flex flex-col gap-[30px]">
-            <label
-              className="text-white font-bold flex flex-col ps-3"
-              htmlFor="username"
-            >
-              User Name
-              <input
-                onChange={handleChange}
-                className="rounded-xl py-1 px-7 text-black"
-                type="text"
-                name="username"
-              />
-            </label>
+
 
             <label
               className="text-white font-bold flex flex-col ps-3"

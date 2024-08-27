@@ -20,7 +20,7 @@ export default function MessagePage() {
           seller: user._id,
         },
       });
-
+      console.log(prevmessages.data.messages, 'pppppppppppppppp')
       dispatch(previouMessages(prevmessages.data.messages));
       router.push("chatPage");
     } catch (error) {

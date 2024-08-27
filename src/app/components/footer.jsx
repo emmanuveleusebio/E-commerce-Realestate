@@ -2,17 +2,22 @@
 import React from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import NProgress from "nprogress";
+
 
 export default function Footer() {
   const router = useRouter();
 
   const logout = async () => {
+    NProgress.start()
     try {
       await axios.post("api/logout");
       router.push("/login");
       console.log("logged out");
     } catch (error) {
       console.log(error);
+    } finally {
+      NProgress.done()
     }
   };
   return (

@@ -4,6 +4,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   initialState: {
+    allProducts: [],
+    filteredProducts: [],
     isAuthenticated: false,
     productDetails: {},
     wishlistProducts: [],
@@ -11,6 +13,7 @@ const initialState = {
     membership: [],
     messages: [],
     chatList: [],
+    users: [],
   }
 }
 
@@ -19,6 +22,12 @@ const globalSlice = createSlice({
   initialState,
 
   reducers: {
+    allPlots: (state, action) => {
+      state.allProducts = action.payload;
+    },
+    filterProduct: (state, action) => {
+      state.filteredProducts = action.payload;
+    },
     loginSuccess: (state) => {
       state.isAuthenticated = !state.isAuthenticated;
     },
@@ -40,10 +49,13 @@ const globalSlice = createSlice({
     },
     chatCollections: (state, action) => {
       state.chatList = action.payload
+    },
+    userList: (state, action) => {
+      state.users = action.payload
     }
 
   }
 })
 
-export const { loginSuccess, viewDetails, wishlistdata, messageReceiverId, authUser, membershipPlans, previouMessages, chatCollections } = globalSlice.actions;
+export const { allPlots, filterProduct, loginSuccess, viewDetails, wishlistdata, messageReceiverId, authUser, membershipPlans, previouMessages, chatCollections, userList } = globalSlice.actions;
 export default globalSlice.reducer;

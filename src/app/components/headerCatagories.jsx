@@ -1,22 +1,22 @@
 "use client";
 import React from "react";
 import Header from "./header";
-import Listing from "./productListing";
-import axios from "axios";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../features/proudctSlice";
+import { filterProduct } from "../features/dataSlice";
 
 export default function HeaderCatagories() {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.products.products);
+  const products = useSelector((state) => state.globalValues.allProducts);
 
   const showCategories = (category) => {
-    dispatch(getProducts(category));
+    const filteredProducts = products.filter((product) =>
+      product.category === category
+    );
+    dispatch(filterProduct(filteredProducts));
   };
 
   const allCategories = () => {
-    dispatch(getProducts());
+    dispatch(filterProduct(products));
   };
 
   return (

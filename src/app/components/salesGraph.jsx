@@ -1,8 +1,40 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 export default function Graph() {
-  const sales = [3, 5, 6, 8, 5, 3, 7];
-  const maxSales = 10;
+  const users = useSelector((state) => state.globalValues.users) || [];
+
+  const getSalesData = () => {
+    const today = new Date();
+    const sales = Array(7).fill(0); // Initialize an array with 7 elements set to 0
+
+    users.forEach((user) => {
+      const createdAt = new Date(user.premiumMembership.startDate);
+      const daysAgo = Math.floor((today - createdAt) / (1000 * 60 * 60 * 24));
+
+      if (daysAgo >= 0 && daysAgo < 7) {
+        sales[6 - daysAgo] += 1; // Increment the sales count for the corresponding day
+      }
+    });
+
+    return sales;
+  };
+
+  // Total number of users
+  const totalUsers = users.length;
+
+  // Number of users who bought premium membership
+  const premiumUsersCount = users.filter(
+    (user) => user.premiumMembership?.purchaseDate
+  ).length;
+
+  // Calculate percentages based on total user count scaled to 10
+  const totalPercentage = 500; // Total represented as 10
+  const premiumUsersPercentage =
+    (premiumUsersCount / totalUsers) * totalPercentage;
+
+  const sales = getSalesData();
+  const maxSales = users.length;
   const highest = Math.max(...sales);
   const graphHeight = 500;
   return (
@@ -26,31 +58,22 @@ export default function Graph() {
             return (
               <div
                 key={index}
-                className={`w-[50px] bg-gray-500`}
-                style={{ height: `${barHeight}px` }}
-              ></div>
+                className="flex flex-col justify-center items-center mb-[-24px]"
+              >
+                <div
+                  className={`w-[50px] bg-gray-500`}
+                  style={{ height: `${barHeight}px` }}
+                ></div>
+                <p>{index + 1}</p>
+              </div>
             );
           })}
         </div>
         <div className="font-bold">
-          <p>X-Month</p>
+          <p>X-WEEK</p>
           <p>Y-Percentage</p>
           <p>Highest Revenue-{highest}.000$</p>
         </div>
-      </div>
-      <div className="flex  h-full gap-[51px] px-12 font-bold">
-        <h1>1</h1>
-        <h1>2</h1>
-        <h1>3</h1>
-        <h1>4</h1>
-        <h1>5</h1>
-        <h1>6</h1>
-        <h1>7</h1>
-        <h1>8</h1>
-        <h1>9</h1>
-        <h1>10</h1>
-        <h1>11</h1>
-        <h1>12</h1>
       </div>
     </div>
   );
