@@ -1,7 +1,7 @@
 // store.js
 import { configureStore } from "@reduxjs/toolkit";
 import globalReducer from "./features/dataSlice";
-import productReducer from './features/proudctSlice';
+// import productReducer from './features/proudctSlice';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import { combineReducers } from 'redux';
@@ -12,7 +12,6 @@ const presistConfig = {
 }
 
 const rootReducer = combineReducers({
-  products: productReducer,
   globalValues: globalReducer,
 });
 
