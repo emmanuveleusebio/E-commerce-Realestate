@@ -99,12 +99,7 @@ export default function Details() {
         </ul>
         <div className="flex justify-between items-center">
           <h2 className="text-2xl">{details.price}</h2>
-          <button
-            onClick={chat}
-            className="buttons bg-blue-500 px-[70px] py-3 rounded-2xl text-white"
-          >
-            Chat
-          </button>
+
         </div>
       </div>
       {popupMessage && (

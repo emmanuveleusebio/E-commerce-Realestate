@@ -159,10 +159,7 @@ export default function Header() {
           onClick={profile}
           className="text-green-500 text-2xl fa-solid fa-user"
         ></i>
-        <i
-          onClick={message}
-          className="text-blue-200 text-2xl fa-solid fa-message"
-        ></i>
+
       </div>
     </div>
   );

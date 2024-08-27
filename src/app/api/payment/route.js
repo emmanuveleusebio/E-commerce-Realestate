@@ -49,7 +49,7 @@ export async function PUT(NextRequest){
         }
         let decodedToken;
         try {
-            const secretKey = '123456'
+            const secretKey = process.env.SECRET_KEY
             decodedToken = jwt.verify(token, secretKey)
             console.log(decodedToken.id, 'this is the de')
         } catch (error) {

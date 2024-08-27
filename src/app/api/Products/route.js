@@ -65,7 +65,7 @@ export async function POST(NextRequest) {
         }
         let decodedToken
         try {
-            const secretKey = '123456'
+            const secretKey = process.env.SECRET_KEY
             decodedToken = jwt.verify(token, secretKey)
 
         } catch (error) {

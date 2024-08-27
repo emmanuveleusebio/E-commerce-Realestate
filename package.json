@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "nodemon server.js",
+    "dev": "next dev",
     "build": "next build",
-    "lint": "next lint",
-    "start": "node server.js",
-    "start:socket": "node socket-server.js"
+    "start": "next start",
+    "socket": "node socketServer.js",
+    "lint": "next lint"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.633.0",

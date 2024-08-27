@@ -4,7 +4,7 @@ import Connect from "@/config/dbConfig";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
-const secretKey = '123456';
+const secretKey = process.env.SECRET_KEY
 
 export async function POST(NextRequest) {
     try {
