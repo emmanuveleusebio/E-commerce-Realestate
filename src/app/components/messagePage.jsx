@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { previouMessages } from "../features/dataSlice";
 import { useRouter } from "next/navigation";
 import NProgress from "nprogress";
+import Image from "next/image";
 
 export default function MessagePage() {
   const dispatch = useDispatch();
@@ -46,7 +47,7 @@ export default function MessagePage() {
               onClick={() => getChat(content)}
             >
               <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center overflow-hidden">
-                <img
+                <Image
                   src={content.profilePic || "https://via.placeholder.com/150"}
                   alt="Profile"
                   className="w-full h-full object-cover"

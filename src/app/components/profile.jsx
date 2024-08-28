@@ -1,6 +1,7 @@
 "use client";
 import React, { useRef } from "react";
 import Header from "./header";
+import Image from "next/image";
 
 export default function Profile() {
   // Create a ref to the input field
@@ -22,10 +23,12 @@ export default function Profile() {
           ref={inputRef}
         />
         <div className="p-1 bg-white rounded-full">
-          <img
+        <Image
             className="w-40 h-40 rounded-full cursor-pointer"
             src="https://www.shutterstock.com/image-photo/profile-picture-smiling-young-african-260nw-1873784920.jpg"
             alt=""
+            width={160} // Adjust width according to your needs
+            height={160} // Adjust height according to your needs
             onClick={handleImageClick}
           />
         </div>

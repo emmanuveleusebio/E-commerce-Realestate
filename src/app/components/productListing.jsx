@@ -7,12 +7,13 @@ import { viewDetails } from "../features/dataSlice";
 import Skelton from "./skeltonLoading";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
+import Image from "next/image";
 
 export default function Listing() {
   const dispatch = useDispatch();
   const router = useRouter();
   // const { products, status, error } = useSelector((state) => state.products);
-   const products = useSelector((state) => state.globalValues.filteredProducts);
+  const products = useSelector((state) => state.globalValues.filteredProducts);
   // const products = useSelector((state) => state.globalValues.filteredProduct) || [];
 
   // useEffect(() => {
@@ -68,7 +69,13 @@ export default function Listing() {
               onClick={() => moreDetails(details)}
             >
               <div className="h-[170px]">
-                <img className="h-full" src={details.imageUrl} alt="" />
+                <Image
+                  className="h-full w-full object-cover"
+                  src={details.imageUrl}
+                  alt={details.title}
+                  width={250} // or any appropriate width based on your layout
+                  height={170} // or any appropriate height based on your layout
+                />
               </div>
               <div className="p-4">
                 <p className=" text-2xl">

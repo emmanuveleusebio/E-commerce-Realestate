@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { authUser } from "../features/dataSlice";
 import NProgress from "nprogress";
+import Image from "next/image";
 
 export default function RegisterCard() {
   const dispatch = useDispatch();
@@ -61,10 +62,12 @@ export default function RegisterCard() {
   return (
     <div className="bg-blue-300">
       <div className="relative">
-        <img
+      <Image
           className="h-screen w-screen object-cover opacity-75"
           src="https://e0.pxfuel.com/wallpapers/436/360/desktop-wallpaper-black-and-white-skyscraper-drawing-building-drawing.jpg"
-          alt=""
+          alt="Skyscraper Drawing"
+          width={1920} // Example width, adjust as needed
+          height={1080} // Example height, adjust as needed
         />
         <div className="register-card flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 backdrop-blur-lg p-5 rounded-xl gap-[35px]">
           <h1 className="text-2xl font-bold text-white">Register</h1>

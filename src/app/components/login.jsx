@@ -7,6 +7,7 @@ import { loginSuccess } from "../features/dataSlice";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import { userList } from "../features/dataSlice";
+import Image from "next/image";
 
 export default function Login() {
   const router = useRouter();
@@ -80,17 +81,17 @@ export default function Login() {
   return (
     <div className="bg-blue-300">
       <div className="relative">
-        <img
-          className=" h-screen w-screen object-cover opacity-75"
+        <Image
+          className="h-screen w-screen object-cover opacity-75"
           src="https://e0.pxfuel.com/wallpapers/436/360/desktop-wallpaper-black-and-white-skyscraper-drawing-building-drawing.jpg"
-          alt=""
+          alt="Skyscraper Drawing"
+          width={1920} // Example width, adjust as needed
+          height={1080} // Example height, adjust as needed
         />
         <div className="register-card flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 backdrop-blur-lg  p-5 rounded-xl gap-[35px]">
           <h1 className="text-3xl font-bold text-white">Login</h1>
 
           <div className="flex flex-col gap-[30px]">
-
-
             <label
               className="text-white font-bold flex flex-col ps-3"
               htmlFor="email"

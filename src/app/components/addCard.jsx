@@ -1,6 +1,7 @@
 "use client";
 import React, { useRef, useState } from "react";
 import axios from "axios";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 export default function AddPage() {
@@ -9,6 +10,7 @@ export default function AddPage() {
   const router = useRouter();
   const inputRef = useRef(null);
   const [img, setImg] = useState(null);
+  const [imgPreview, setImgPreview] = useState(null); // To store the image preview URL
 
   const addImg = () => {
     if (inputRef.current) {
@@ -21,10 +23,8 @@ export default function AddPage() {
     setImg(file);
     if (file) {
       setDisplay(false);
+      setImgPreview(URL.createObjectURL(file)); // Create a preview URL for the image
     }
-    // Display the image in the img tag
-    const imgPreview = document.getElementById("img-preview");
-    imgPreview.src = URL.createObjectURL(file);
   };
 
   const [about, setAbout] = useState({
@@ -34,6 +34,7 @@ export default function AddPage() {
     price: "",
     category: "",
   });
+
   const handleChange = (e) => {
     const { value, name } = e.target;
     setAbout((prevData) => ({
@@ -72,20 +73,24 @@ export default function AddPage() {
           className="addImg relative h-[250px] overflow-hidden bg-white"
           onClick={addImg}
         >
-          <img className="w-[100%]  h-[100%]" id="img-preview" src="" alt="" />
+          {imgPreview && (
+            <Image
+              className="w-full h-full"
+              id="img-preview"
+              src={imgPreview}
+              alt="Preview"
+              layout="fill"
+              objectFit="cover"
+            />
+          )}
           <input
-            className={`hidden `}
+            className={`hidden`}
             type="file"
             ref={inputRef}
             onChange={handleImgChange}
           />
-          <img
-            className={`w-full ${display ? "hidden" : " block"}`}
-            src=""
-            alt=""
-          />
           <div
-            className={` ${
+            className={`${
               display ? "block" : "hidden"
             } absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2`}
           >
