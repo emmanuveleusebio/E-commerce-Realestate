@@ -7,8 +7,8 @@ import jwt from 'jsonwebtoken'
 
 
 const razorpay = new Razorpay({
-    key_id: process.env.RAZOR_KEY_ID-r,
-    key_secret: process.env.RAZOR_KEY_SECRET-r,
+    key_id: process.env.RAZOR_KEY_ID_R,
+    key_secret: process.env.RAZOR_KEY_SECRET_R,
 })
 
 export async function POST(NextRequest) {
@@ -49,7 +49,7 @@ export async function PUT(NextRequest){
         }
         let decodedToken;
         try {
-            const secretKey = process.env.SECRET_KEY-r
+            const secretKey = process.env.SECRET_KEY_R
             decodedToken = jwt.verify(token, secretKey)
             console.log(decodedToken.id, 'this is the de')
         } catch (error) {

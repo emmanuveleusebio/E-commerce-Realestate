@@ -9,7 +9,7 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import store, { persistor } from "../store";
 
-export default function () {
+export default function ProfilePage() {
   return (
     <div className="body">
       <Provider store={store}>

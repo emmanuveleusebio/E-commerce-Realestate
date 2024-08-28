@@ -11,6 +11,7 @@ import {
 import { useState } from "react";
 import axios from "axios";
 import NProgress from "nprogress";
+import Image from "next/image";
 
 export default function Details() {
   const router = useRouter();
@@ -80,10 +81,12 @@ export default function Details() {
           ></i>
         </div>
         <div className="details-img">
-          <img
+          <Image
             className="w-[100%] max-h-[300px]"
             src={details.imageUrl}
             alt=""
+            width={600} 
+            height={300}
           />
           <i className=" fa-solid fa-angle-left left-angle"></i>
           <i className=" fa-solid fa-angle-right right-angle"></i>
@@ -99,7 +102,6 @@ export default function Details() {
         </ul>
         <div className="flex justify-between items-center">
           <h2 className="text-2xl">{details.price}</h2>
-
         </div>
       </div>
       {popupMessage && (

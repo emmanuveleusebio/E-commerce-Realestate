@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import jwt from 'jsonwebtoken'
 
-const secretKey = process.env.SECRET_KEY-r
+const secretKey = process.env.SECRET_KEY_R
 
 export async function GET(NextRequest) {
     try {

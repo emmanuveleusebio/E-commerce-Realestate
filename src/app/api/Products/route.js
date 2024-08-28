@@ -6,10 +6,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
 const s3Client = new S3Client({
-    region: process.env.AWS_REGION-r,
+    region: process.env.AWS_REGION_R,
     credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY-r,
-        secretAccessKey: process.env.AWS_SECRET_KEY-r,
+        accessKeyId: process.env.AWS_ACCESS_KEY_R,
+        secretAccessKey: process.env.AWS_SECRET_KEY_R,
     }
 })
 
@@ -19,7 +19,7 @@ async function uploadFileToS3(file, fileName) {
     const s3Key = `myfolder/${uniqueId}_${fileName}`;
 
     const params = {
-        Bucket: process.env.AWS_NAME-r,
+        Bucket: process.env.AWS_NAME_R,
         Key: s3Key,
         Body: fileBuffer,
         ContentType: file.type || 'image/jpg'
@@ -65,7 +65,7 @@ export async function POST(NextRequest) {
         }
         let decodedToken
         try {
-            const secretKey = process.env.SECRET_KEY-r
+            const secretKey = process.env.SECRET_KEY_R
             decodedToken = jwt.verify(token, secretKey)
 
         } catch (error) {
@@ -116,8 +116,8 @@ export async function GET(NextRequest) {
         }
 
         // Construct the S3 URL for each product
-        const bucketName = process.env.AWS_NAME-r;
-        const s3BaseUrl = `https://${bucketName}.s3.${process.env.AWS_REGION-r}.amazonaws.com/`;
+        const bucketName = process.env.AWS_NAME_R;
+        const s3BaseUrl = `https://${bucketName}.s3.${process.env.AWS_REGION_R}.amazonaws.com/`;
 
         const productsWithImages = data.map(product => {
             return {
