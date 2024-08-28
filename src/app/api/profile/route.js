@@ -16,15 +16,15 @@ export async function GET(request) {
         }
         let decodedToken;
         try {
-            const secretKey = process.env.SECRET_KEY
+            const secretKey = process.env.SECRET_KEY-r
             decodedToken = jwt.verify(token, secretKey)
         } catch (error) {
             return NextResponse.json({ message: 'token is not valit' }, { status: 404 })
         }
         const data = await posts.find({ seller: decodedToken.id })
 
-        const bucketName = process.env.AWS_NAME;
-        const s3BaseUrl = `https://${bucketName}.s3.${process.env.AWS_REGION}.amazonaws.com/`;
+        const bucketName = process.env.AWS_NAME-r;
+        const s3BaseUrl = `https://${bucketName}.s3.${process.env.AWS_REGION-r}.amazonaws.com/`;
         const productsWithImages = data.map(product => {
             return {
                 ...product.toObject(),  // Convert mongoose document to plain object

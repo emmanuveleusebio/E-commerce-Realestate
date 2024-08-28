@@ -55,12 +55,12 @@ export async function POST(NextRequest) {
           password: hashedPassword,
         })
       }
-      const secretKey = process.env.SECRET_KEY
+      const secretKey = process.env.SECRET_KEY-r
       const response = NextResponse.json({ Name: 'success' }, { status: 200 })
       const token = jwt.sign({ id: member._id }, secretKey, { expiresIn: '1h' })
       response.cookies.set('token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: process.env.NODE_ENV-r === 'production',
         maxAge: 3600,
         path: '/'
       })

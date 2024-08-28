@@ -4,7 +4,7 @@ import Connect from "@/config/dbConfig";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
-const secretKey = process.env.SECRET_KEY
+const secretKey = process.env.SECRET_KEY-r
 
 export async function POST(NextRequest) {
     try {
@@ -23,7 +23,7 @@ export async function POST(NextRequest) {
             const response = NextResponse.json({ message: 'user verified sucessfully',  role: account.role === 'admin' ? 'admin' : 'user'}, {status:200})
             response.cookies.set('token', token, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
+                secure: process.env.NODE_ENV-r === 'production',
                 maxAge: 86400000,
                 path: '/'
             });

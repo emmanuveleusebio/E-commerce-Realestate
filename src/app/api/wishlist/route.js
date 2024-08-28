@@ -14,7 +14,7 @@ export async function GET(NextRequest) {
         }
         let decodedToken;
         try {
-            const secretKey = process.env.SECRET_KEY
+            const secretKey = process.env.SECRET_KEY-r
             decodedToken = jwt.verify(token, secretKey)
         } catch (error) {
             return NextResponse.json({ message: 'token is not valit' }, { status: 404 })
@@ -29,8 +29,8 @@ export async function GET(NextRequest) {
 
 
         // Construct the S3 URL for each product
-        const bucketName = process.env.AWS_NAME;
-        const s3BaseUrl = `https://${bucketName}.s3.${process.env.AWS_REGION}.amazonaws.com/`;
+        const bucketName = process.env.AWS_NAME-r;
+        const s3BaseUrl = `https://${bucketName}.s3.${process.env.AWS_REGION-r}.amazonaws.com/`;
 
         const productsWithImages = productList.map(product => {
             return {
@@ -54,7 +54,7 @@ export async function POST(NextRequest) {
         }
         let decodedToken;
         try {
-            const secretKey = process.env.SECRET_KEY
+            const secretKey = process.env.SECRET_KEY-r
             decodedToken = jwt.verify(token, secretKey)
         } catch (error) {
             return NextResponse.json({ message: 'invalid token' }, { status: 404 })
