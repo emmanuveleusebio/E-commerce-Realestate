@@ -31,10 +31,12 @@ export default function Wishlist() {
           key={index}
         >
           <div className="w-[250px] h-[250px]">
-            <img
+            <Image
               className="min-h-[250px] min-w-[250px] max-h-[250px] max-w-[250px]"
               src={element.imageUrl}
               alt=""
+              width={250}
+              height={250} 
             />
           </div>
           <div className="flex flex-col justify-between">
