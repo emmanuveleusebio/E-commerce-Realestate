@@ -12,7 +12,7 @@ export async function GET(request) {
         const token = request.cookies.get('token')?.value
        
         if (!token) {
-            NextResponse.json({ message: 'user is not verified' }, { status: 404 })
+           return NextResponse.json({ message: 'user is not verified' }, { status: 404 })
         }
         let decodedToken;
         try {
@@ -26,7 +26,7 @@ export async function GET(request) {
         const bucketName = process.env.AWS_NAME_R;
         const s3BaseUrl = `https://${bucketName}.s3.${process.env.AWS_REGION_R}.amazonaws.com/`;
         const productsWithImages = data.map(product => {
-            return {
+            return { 
                 ...product.toObject(),  // Convert mongoose document to plain object
                 imageUrl: s3BaseUrl + product.image // Append the S3 key to the base URL
             };
@@ -34,6 +34,6 @@ export async function GET(request) {
         
         return NextResponse.json({ message: productsWithImages }, { status: 200 })
     } catch (error) {
-        return NextResponse({ error: error.message }, { status: 500 })
+        return NextResponse.json({ error: error.message }, { status: 500 })
     }
 }

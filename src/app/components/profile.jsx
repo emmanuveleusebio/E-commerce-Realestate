@@ -1,6 +1,5 @@
 "use client";
 import React, { useRef } from "react";
-import Header from "./header";
 import Image from "next/image";
 
 export default function Profile() {
